@@ -1,0 +1,32 @@
+{
+  "name": "easy-action-for-github",
+  "description": "test",
+  "version": "0.1.0",
+  "manifest_version": 2,
+  "icons": {
+    "16": "icon.png"
+  },
+  "background": {
+    "scripts": [
+      "background.js"
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://github.com/*"
+      ],
+      "js": [
+        "main.js"
+      ],
+      "css": [
+        "main.css"
+      ]
+    }
+  ],
+  "permissions": [
+    "https://github.com/*",
+    "clipboardRead",
+    "clipboardWrite"
+  ]
+}
