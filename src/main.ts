@@ -1,12 +1,12 @@
 const addOnClickCopyTitle = (title: HTMLSpanElement): void => {
-  title.addEventListener('click', async () => {
+  title.addEventListener('click', () => {
     const trimmedText = title.innerText.trim()
-    await navigator.clipboard.writeText(trimmedText)
+    navigator.clipboard.writeText(trimmedText)
   })
 }
 
 const addOnClickEditButton = (editButton: HTMLButtonElement): void => {
-  editButton.addEventListener('click', async () => {
+  editButton.addEventListener('click', () => {
     const originalEditButton = document.querySelector('button.js-comment-edit-button')
     ;(originalEditButton as HTMLButtonElement)?.click()
   })
