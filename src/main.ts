@@ -5,28 +5,36 @@ const addOnClickCopyTitle = (title: HTMLSpanElement): void => {
   })
 }
 
-const addOnClickEditButton = (editButton: HTMLButtonElement): void => {
-  editButton.addEventListener('click', () => {
-    const originalEditButton = document.querySelector('button.js-comment-edit-button')
-    ;(originalEditButton as HTMLButtonElement)?.click()
+const makeButton = (originalEditButton: HTMLButtonElement): HTMLButtonElement => {
+  const button = document.createElement('button')
+  button.classList.add('btn', 'btn-sm', 'easy-action')
+  button.textContent = 'Edit'
+  button.style.marginLeft = '0.5rem'
+  button.style.float = 'right'
+  button.addEventListener('click', () => {
+    originalEditButton?.click()
   })
+  return button
 }
 
 window.setInterval(() => {
   const existEasyActionButton = !!document.querySelector('button.easy-action')
-
   if (existEasyActionButton) return
-  // TODO: コメントが複数ある場合考える
+  // TODO: ブラウザのリロードせずにコメントが増えた場合にもボタンがつくように対応する
+  // resolved になっているコメントはボタンつける必要はないかも？
 
   const title = document.querySelector('span.js-issue-title')
-  if (title && title instanceof HTMLSpanElement) addOnClickCopyTitle(title)
+  if (title instanceof HTMLSpanElement) addOnClickCopyTitle(title)
 
-  const editButton = document.createElement('button')
-  editButton.classList.add('btn', 'btn-sm', 'easy-action')
-  editButton.textContent = 'Edit'
-  addOnClickEditButton(editButton)
+  const originalButtons = document.querySelectorAll(
+    '.dropdown-item.btn-link.js-comment-edit-button'
+  )
+  if (!originalButtons) return
 
-  const parent = document.querySelector('div.timeline-comment-header')
-  const refChild = document.querySelector('h3.timeline-comment-header-text')
-  parent?.insertBefore(editButton, refChild)
+  originalButtons.forEach((button, index, buttons) => {
+    const editButton = makeButton(button as HTMLButtonElement)
+    const parent = buttons[index]?.parentNode?.parentNode?.parentNode?.parentNode
+    const refChild = parent?.childNodes[3]
+    if (refChild) parent?.insertBefore(editButton, refChild)
+  })
 }, 3000)
