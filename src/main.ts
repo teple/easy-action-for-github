@@ -90,7 +90,7 @@ window.setInterval(() => {
 
   const isActivatedWIP = (document.querySelector(
     '#issue_title'
-  ) as HTMLInputElement).value.startsWith('[WIP]')
+  ) as HTMLInputElement)?.value.startsWith('[WIP]')
 
   const WIPToggleButton = makeWIPToggleButton(isActivatedWIP)
   const parent = document.querySelector('#partial-discussion-header > div.gh-header-show > h1')
